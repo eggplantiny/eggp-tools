@@ -22,22 +22,22 @@ import { useLocation } from 'react-router-dom'
 const items = [
   {
     title: 'Color tool',
-    url: '/color-tool',
+    url: '/#/color-tool',
     icon: PaletteIcon,
   },
   {
     title: 'HTML to Markdown',
-    url: '/html-to-markdown',
+    url: '/#/html-to-markdown',
     icon: Code,
   },
   {
     title: 'Tailwindcss to CSS',
-    url: '/tailwindcss-to-css',
+    url: '/#/tailwindcss-to-css',
     icon: BriefcaseConveyorBeltIcon,
   },
   {
     title: 'Comment remover',
-    url: '/comment-remover',
+    url: '/#/comment-remover',
     icon: Eraser,
   },
 ]
