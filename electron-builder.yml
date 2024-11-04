@@ -42,4 +42,4 @@ appImage:
 npmRebuild: false
 publish:
   - provider: github
-    protocol: https
+    token: ${{ secrets.github_token }}
