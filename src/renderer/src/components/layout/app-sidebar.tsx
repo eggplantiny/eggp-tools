@@ -13,6 +13,7 @@ import {
   BriefcaseConveyorBeltIcon,
   Code,
   Eraser,
+  ImageIcon,
   PaletteIcon,
 } from 'lucide-react'
 import { useCallback } from 'react'
@@ -39,6 +40,11 @@ const items = [
     title: 'Comment remover',
     url: '/comment-remover',
     icon: Eraser,
+  },
+  {
+    title: 'SVG to PNG',
+    url: '/svg-to-png',
+    icon: ImageIcon,
   },
 ]
 
