@@ -1,6 +1,6 @@
 {
   "name": "eggp-tools",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "An Electron application with React and TypeScript",
   "author": "eggplantiny <github.com/eggplantiny>",
   "homepage": "https://electron-vite.org",
