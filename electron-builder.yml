@@ -42,4 +42,7 @@ appImage:
 npmRebuild: false
 publish:
   - provider: github
+    with:
+      github_token: ${{ secrets.github_token }}
     token: ${{ secrets.github_token }}
+    github_token: ${{ secrets.github_token }}
