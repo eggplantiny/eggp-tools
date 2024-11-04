@@ -1,4 +1,3 @@
-import { getConvertedClasses } from '@/lib/tailwind-util'
 import * as cheerio from 'cheerio'
 
 type ClassNameMap = Map<string, string[]>
@@ -67,15 +66,5 @@ export class HtmlClassNameTransformer {
 
   public getClassNameMapping(): ClassNameMap {
     return this.classNameMapping
-  }
-
-  public getTransformedCss(): string {
-    const css = Array.from(this.classNameMapping.entries())
-      .map(([newClassName, originalClassNames]) => {
-        const _css = getConvertedClasses(newClassName, originalClassNames.join(' '))
-        return `.${newClassName} { ${_css} }`
-      })
-      .join('\n')
-    return css
   }
 }

@@ -16,28 +16,28 @@ import {
   PaletteIcon,
 } from 'lucide-react'
 import { useCallback } from 'react'
-import { useLocation } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 
 // Menu items.
 const items = [
   {
     title: 'Color tool',
-    url: '/#/color-tool',
+    url: '/color-tool',
     icon: PaletteIcon,
   },
   {
     title: 'HTML to Markdown',
-    url: '/#/html-to-markdown',
+    url: '/html-to-markdown',
     icon: Code,
   },
   {
     title: 'Tailwindcss to CSS',
-    url: '/#/tailwindcss-to-css',
+    url: '/tailwindcss-to-css',
     icon: BriefcaseConveyorBeltIcon,
   },
   {
     title: 'Comment remover',
-    url: '/#/comment-remover',
+    url: '/comment-remover',
     icon: Eraser,
   },
 ]
@@ -65,10 +65,10 @@ export function AppSidebar() {
                       asChild
                       isActive={isActivated(item.url)}
                     >
-                      <a href={item.url}>
+                      <Link to={item.url}>
                         <item.icon />
-                        <span>{item.title}</span>
-                      </a>
+                        <span>{ item.title }</span>
+                      </Link>
                     </SidebarMenuButton>
                   </SidebarMenuItem>
                 ))

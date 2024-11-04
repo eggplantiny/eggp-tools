@@ -58,3 +58,24 @@ export function extractClassNamesFromHtml(html: string): string[] {
 
   return Array.from(classMap.keys())
 }
+
+export function refineCss(code: string): string {
+  const filteredRules: string[] = []
+  const regex = /([^{]+)\{([^}]*)\}/g
+
+  let match = regex.exec(code)
+
+  while (match !== null) {
+    const selectors = match[1].trim()
+    const selectorList = selectors.split(',').map(s => s.trim())
+    const hasClassSelector = selectorList.some(selector => selector.startsWith('.'))
+
+    if (hasClassSelector) {
+      filteredRules.push(`${selectors} {${match[2]}}`)
+    }
+
+    match = regex.exec(code)
+  }
+
+  return filteredRules.join('\n')
+}
