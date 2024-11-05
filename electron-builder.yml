@@ -28,7 +28,6 @@ mac:
   entitlementsInherit: resources/entitlements.mac.plist
   hardenedRuntime: true
   gatekeeperAssess: false
-  afterSign: electron-builder-notarize
 dmg:
   artifactName: ${name}-${version}.${ext}
 linux:
