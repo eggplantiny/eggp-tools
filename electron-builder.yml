@@ -26,8 +26,8 @@ mac:
   target: dmg
   hardenedRuntime: true
   gatekeeperAssess: false
-  entitlements: ./resources/entitlements.mac.plist
-  entitlementsInherit: ./resources/entitlements.mac.plist
+  entitlements: resources/entitlements.mac.plist
+  entitlementsInherit: resources/entitlements.mac.plist
   notarize: true
   extendInfo:
     - NSCameraUsageDescription: Application requests access to the device's camera.
