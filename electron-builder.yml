@@ -1,5 +1,5 @@
 appId: com.eggp.eggp-tools.app
-productName: eggp tools
+productName: eggp-tools
 directories:
   buildResources: build
 files:
@@ -12,7 +12,7 @@ files:
 asarUnpack:
   - resources/**
 win:
-  executableName: eggp tools
+  executableName: eggp-tools
   icon: resources/icon.png
 nsis:
   artifactName: ${name}-${version}-setup.${ext}
@@ -20,6 +20,7 @@ nsis:
   uninstallDisplayName: ${productName}
   createDesktopShortcut: always
 mac:
+  executableName: eggp-tools
   icon: resources/icon.png
   entitlements: resources/entitlements.mac.plist
   entitlementsInherit: resources/entitlements.mac.plist
