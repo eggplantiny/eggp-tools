@@ -23,12 +23,12 @@ mac:
   executableName: eggp-tools
   icon: resources/icon.png
   category: public.app-category.productivity
-  target: [dmg, zip]
+  target: dmg
+  notarize: true
   entitlements: resources/entitlements.mac.plist
   entitlementsInherit: resources/entitlements.mac.plist
   hardenedRuntime: true
   gatekeeperAssess: false
-  notarize: true
 dmg:
   artifactName: ${name}-${version}.${ext}
 linux:
