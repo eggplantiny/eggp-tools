@@ -1,4 +1,4 @@
-appId: com.eggp.eggp-tools.app
+appId: com.eggp.eggp-tools
 productName: eggp-tools
 directories:
   buildResources: build
@@ -22,16 +22,13 @@ nsis:
 mac:
   executableName: eggp-tools
   icon: resources/icon.png
+  category: public.app-category.productivity
+  target: [dmg, zip]
   entitlements: resources/entitlements.mac.plist
   entitlementsInherit: resources/entitlements.mac.plist
   hardenedRuntime: true
   gatekeeperAssess: false
-  notarize: true
-  extendInfo:
-    - NSCameraUsageDescription: Application requests access to the device's camera.
-    - NSMicrophoneUsageDescription: Application requests access to the device's microphone.
-    - NSDocumentsFolderUsageDescription: Application requests access to the user's Documents folder.
-    - NSDownloadsFolderUsageDescription: Application requests access to the user's Downloads folder.
+  afterSign: electron-builder-notarize
 dmg:
   artifactName: ${name}-${version}.${ext}
 linux:
