@@ -41,6 +41,6 @@ jobs:
         env:
           APPLE_API_KEY: ~/private_keys/AuthKey_${{ secrets.API_KEY_ID }}.p8
           APPLE_API_KEY_ID: ${{ secrets.API_KEY_ID }}
-          APPLE_ISSUER_ID: ${{ secrets.API_KEY_ISSUER_ID }}
+          APPLE_API_ISSUER: ${{ secrets.API_KEY_ISSUER_ID }}
           API_KEY_ID: ${{ secrets.API_KEY_ID }}
           API_KEY_ISSUER_ID: ${{ secrets.API_KEY_ISSUER_ID }}
