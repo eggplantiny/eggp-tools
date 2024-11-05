@@ -49,3 +49,4 @@ jobs:
           APPLE_API_ISSUER: ${{ secrets.API_KEY_ISSUER_ID }}
           API_KEY_ID: ${{ secrets.API_KEY_ID }}
           API_KEY_ISSUER_ID: ${{ secrets.API_KEY_ISSUER_ID }}
+          DEBUG: electron-notarize*
