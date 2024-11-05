@@ -20,9 +20,10 @@ nsis:
   uninstallDisplayName: ${productName}
   createDesktopShortcut: always
 mac:
+  appId: com.eggp.eggp-tools
   executableName: eggp-tools
   icon: resources/icon.png
-  category: public.app-category.productivity
+  category: public.app-category.developer-tools
   target: dmg
   hardenedRuntime: true
   gatekeeperAssess: false
