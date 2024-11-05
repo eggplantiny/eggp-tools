@@ -1,4 +1,4 @@
-import CodeEditor2 from '@/components/atomic/atoms/code-editor2'
+import { CodeEditor } from '@/components/atomic/atoms/code-editor'
 import { PageRootWithSplit } from '@/components/ui/layout'
 import usePageMeta from '@/hooks/use-page-meta'
 import { useEffect, useState } from 'react'
@@ -22,14 +22,14 @@ export function HtmlToMarkdownPage() {
   return (
     <PageRootWithSplit
       left={(
-        <CodeEditor2
+        <CodeEditor
           lang="html"
           onChange={value => setHtml(value)}
         />
       )}
 
       right={(
-        <CodeEditor2
+        <CodeEditor
           lang="markdown"
           value={markdown}
           readOnly
