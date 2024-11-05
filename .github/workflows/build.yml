@@ -32,7 +32,7 @@ jobs:
           echo '${{ secrets.API_KEY }}' > ~/private_keys/AuthKey_${{ secrets.API_KEY_ID }}.p8
 
       - name: Build/release Electron app
-        uses: samuelmeuli/action-electron-builder@v1
+        uses: samuelmeuli/action-electron-builder@v1.6.0
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           mac_certs: ${{ secrets.MAC_CERTS }}
