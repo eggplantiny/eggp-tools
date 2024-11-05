@@ -1,9 +1,10 @@
+import CodeEditor2 from '@/components/atomic/atoms/code-editor2'
 import { PageRoot } from '@/components/ui/layout'
 
 export function SvgToPngPage() {
   return (
     <PageRoot>
-      <h1>SVG to PNG</h1>
+      <CodeEditor2 />
     </PageRoot>
   )
 }

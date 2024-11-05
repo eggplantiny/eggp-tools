@@ -1,3 +1,4 @@
+import type React from 'react'
 import { type ClassValue, clsx } from 'clsx'
 import { twMerge } from 'tailwind-merge'
 
@@ -78,4 +79,20 @@ export function refineCss(code: string): string {
   }
 
   return filteredRules.join('\n')
+}
+
+export function parseStyleString(styleString: string): React.CSSProperties {
+  const styles: React.CSSProperties = {}
+  if (!styleString)
+    return styles
+  styleString.split(';').forEach((style) => {
+    const [key, value] = style.split(':')
+    if (key && value) {
+      const camelCasedKey = key
+        .trim()
+        .replace(/-([a-z])/g, g => g[1].toUpperCase())
+      styles[camelCasedKey as any] = value.trim()
+    }
+  })
+  return styles
 }

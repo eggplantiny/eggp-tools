@@ -238,18 +238,17 @@ export function ColorToolPage() {
   return (
     <PageRoot>
       <div className={cn('flex flex-col gap-2')}>
-        <div className="w-full flex justify-end gap-2">
+        <div className="w-full flex flex-wrap justify-end gap-2">
           { colorCommands.map(({ label, action }) => (
             <Button
               onClick={() => syncColors(action(chroma.color(pickerColor)))}
-              className={cn('rounded-full')}
               key={label}
             >
               { label }
             </Button>
           )) }
 
-          <Button onClick={handleClick} className={cn('rounded-full')}>
+          <Button onClick={handleClick}>
             <Pipette />
             { ' ' }
             Pick a color

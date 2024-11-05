@@ -87,7 +87,7 @@ const PageRootWithSplit = React.forwardRef<HTMLDivElement, PageRootWithSplitProp
         direction="horizontal"
       >
         <ResizablePanel
-          className={cn('p-4')}
+          className={cn('p-4 flex flex-col')}
           minSize={33}
         >
           {
@@ -101,7 +101,7 @@ const PageRootWithSplit = React.forwardRef<HTMLDivElement, PageRootWithSplitProp
         </ResizablePanel>
         <ResizableHandle withHandle={props.withHandle} />
         <ResizablePanel
-          className={cn('p-4')}
+          className={cn('p-4 flex flex-col')}
           minSize={33}
         >
           {
