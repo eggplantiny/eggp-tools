@@ -39,5 +39,8 @@ jobs:
           mac_certs_password: ${{ secrets.MAC_CERTS_PASSWORD }}
           release: ${{ startsWith(github.ref, 'refs/tags/v') }}
         env:
+          APPLE_API_KEY: ${{ secrets.API_KEY }}
+          APPLE_API_KEY_ID: ${{ secrets.API_KEY_ID }}
+          APPLE_API_ISSUER: ${{ secrets.API_KEY_ISSUER_ID }}
           API_KEY_ID: ${{ secrets.API_KEY_ID }}
           API_KEY_ISSUER_ID: ${{ secrets.API_KEY_ISSUER_ID }}
