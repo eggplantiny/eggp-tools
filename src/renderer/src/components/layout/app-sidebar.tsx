@@ -10,7 +10,6 @@ import {
   BriefcaseConveyorBeltIcon,
   Code,
   Eraser,
-  ImageIcon,
   PaletteIcon,
 } from 'lucide-react'
 import * as React from 'react'
@@ -40,11 +39,11 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       url: '/comment-remover',
       icon: Eraser,
     },
-    {
-      title: 'SVG to PNG',
-      url: '/svg-to-png',
-      icon: ImageIcon,
-    },
+    // {
+    //   title: 'SVG to PNG',
+    //   url: '/svg-to-png',
+    //   icon: ImageIcon,
+    // },
   ])
 
   function isActive(url: string) {
