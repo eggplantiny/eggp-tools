@@ -243,10 +243,11 @@ export function ColorToolPage() {
                 <PenTool />
               </Button>
             </PopoverTrigger>
-            <PopoverContent>
+            <PopoverContent className={cn('w-64')}>
               <div className={cn('flex flex-col gap-4')}>
                 { colorCommands.map(({ label, leftAction, rightAction }) => (
                   <CommandController
+                    key={label}
                     label={label}
                     leftAction={() => syncColors(leftAction(chroma.color(pickerColor)))}
                     rightAction={() => syncColors(rightAction(chroma.color(pickerColor)))}

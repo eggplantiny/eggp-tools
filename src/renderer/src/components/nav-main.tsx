@@ -19,11 +19,11 @@ export interface MenuItemType {
 
 export function NavMain({ items }: { items: MenuItemType[] }) {
   return (
-    <SidebarGroup className="mt-6">
+    <SidebarGroup className="mt-6 electron-draggable">
       <SidebarGroupLabel>
         Tools
       </SidebarGroupLabel>
-      <SidebarMenu>
+      <SidebarMenu className="electron-draggable-release">
         {items.map(item => (
           <SidebarMenuItem
             key={item.url}
@@ -35,7 +35,7 @@ export function NavMain({ items }: { items: MenuItemType[] }) {
             >
               <Link to={item.url}>
                 {item.icon && <item.icon />}
-                <span>{item.title}</span>
+                <span className="whitespace-nowrap">{item.title}</span>
                 <ChevronRight className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
               </Link>
             </SidebarMenuButton>

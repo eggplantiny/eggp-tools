@@ -106,3 +106,12 @@
 }
 
 
+
+.electron-draggable {
+  -webkit-user-select: none;
+  -webkit-app-region: drag;
+}
+
+.electron-draggable-release {
+  -webkit-app-region: no-drag;
+}

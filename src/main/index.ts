@@ -1,6 +1,6 @@
 import { join } from 'node:path'
 import { electronApp, is, optimizer } from '@electron-toolkit/utils'
-import { app, BrowserWindow, dialog, ipcMain, Menu, shell } from 'electron'
+import { app, BrowserWindow, dialog, ipcMain, shell } from 'electron'
 import ProgressBar from 'electron-progressbar'
 import { autoUpdater } from 'electron-updater'
 import postcss from 'postcss'
@@ -9,6 +9,8 @@ import tailwindcss from 'tailwindcss'
 
 import TurndownService from 'turndown'
 import icon from '../../resources/icon.png?asset'
+
+let progressBar
 
 function createWindow(): void {
   const mainWindow = new BrowserWindow({
@@ -20,6 +22,7 @@ function createWindow(): void {
     webPreferences: {
       preload: join(__dirname, '../preload/index.js'),
       sandbox: false,
+      devTools: is.dev,
     },
   })
 
@@ -33,34 +36,6 @@ function createWindow(): void {
     shell.openExternal(details.url)
     return { action: 'deny' }
   })
-
-  const menu = Menu.buildFromTemplate([
-    {
-      label: 'File',
-      submenu: [
-        {
-          label: 'About eggp-tools',
-          click: () => {
-            const version = app.getVersion()
-            dialog.showMessageBox({
-              type: 'info',
-              title: 'About eggp-tools',
-              message: `eggp-tools version ${version}\nBuilt with Electron and React`,
-              buttons: ['OK'],
-            })
-          },
-        },
-        {
-          label: 'Check for Update',
-          click: () => {
-            autoUpdater.checkForUpdates()
-          },
-        },
-        { role: 'quit' },
-      ],
-    },
-  ])
-  Menu.setApplicationMenu(menu)
 
   if (is.dev && process.env.ELECTRON_RENDERER_URL) {
     mainWindow.loadURL(process.env.ELECTRON_RENDERER_URL)
@@ -119,61 +94,57 @@ app
         createWindow()
     })
 
-    if (!is.dev) {
-      autoUpdater.checkForUpdates()
-
-      let progressBar
-
-      autoUpdater.on('update-available', () => {
-        dialog
-          .showMessageBox({
-            type: 'info',
-            title: 'Update available',
-            message:
-              'A new version of eggp-tools is available. Do you want to update now?',
-            buttons: ['Later', 'Update'],
-          })
-          .then((result) => {
-            const buttonIndex = result.response
-
-            if (buttonIndex === 1)
-              autoUpdater.downloadUpdate()
-          })
-      })
-
-      autoUpdater.once('download-progress', (_progressObj) => {
-        progressBar = new ProgressBar({
-          text: 'Downloading...',
-          detail: 'Downloading...',
+    autoUpdater.on('update-available', () => {
+      dialog
+        .showMessageBox({
+          type: 'info',
+          title: 'Update available',
+          message:
+            'A new version of eggp-tools is available. Do you want to update now?',
+          buttons: ['Later', 'Update'],
         })
+        .then((result) => {
+          const buttonIndex = result.response
 
-        progressBar
-          .on('completed', () => {
-            console.info(`completed...`)
-            progressBar.detail = 'Task completed. Exiting...'
-          })
-          .on('aborted', () => {
-            console.info(`aborted...`)
-          })
-      })
+          if (buttonIndex === 1)
+            autoUpdater.downloadUpdate()
+        })
+    })
 
-      autoUpdater.on('update-downloaded', () => {
-        progressBar.setCompleted()
-        dialog
-          .showMessageBox({
-            type: 'info',
-            title: 'Update ready',
-            message: 'Install & restart now?',
-            buttons: ['Restart', 'Later'],
-          })
-          .then((result) => {
-            const buttonIndex = result.response
+    autoUpdater.once('download-progress', (_progressObj) => {
+      progressBar = new ProgressBar({
+        text: 'Downloading...',
+        detail: 'Downloading...',
+      }, app)
 
-            if (buttonIndex === 0)
-              autoUpdater.quitAndInstall(false, true)
-          })
-      })
-    }
+      progressBar
+        .on('completed', () => {
+          console.info(`completed...`)
+          progressBar.detail = 'Task completed. Exiting...'
+        })
+        .on('aborted', () => {
+          console.info(`aborted...`)
+        })
+    })
+
+    autoUpdater.on('update-downloaded', () => {
+      progressBar.setCompleted()
+      dialog
+        .showMessageBox({
+          type: 'info',
+          title: 'Update ready',
+          message: 'Install & restart now?',
+          buttons: ['Restart', 'Later'],
+        })
+        .then((result) => {
+          const buttonIndex = result.response
+
+          if (buttonIndex === 0)
+            autoUpdater.quitAndInstall(false, true)
+        })
+    })
+
+    autoUpdater.checkForUpdates()
   })
 
 app.on('window-all-closed', () => {

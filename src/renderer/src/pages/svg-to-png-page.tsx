@@ -1,17 +1,22 @@
 import { Input } from '@/components/ui/input'
-import { PageRoot } from '@/components/ui/layout'
+import { Label } from '@/components/ui/label'
+import { PageRootWithSplit } from '@/components/ui/layout'
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
 import usePageMeta from '@/hooks/use-page-meta'
-import { useSessionStorage } from '@/hooks/use-storage'
 import { svgToPng } from '@/lib/image'
-import { useState } from 'react'
+import { cn } from '@/lib/utils'
+import { useEffect, useState } from 'react'
 
 export function SvgToPngPage() {
   usePageMeta({
     title: 'SVG to PNG',
   })
 
-  const [_svg, setSvg] = useSessionStorage<string>('svg-to-png:svg', '')
+  const [svg, setSvg] = useState<string>('')
   const [image, setImage] = useState<string>()
+
+  const [width, setWidth] = useState(256)
+  const [height, setHeight] = useState(256)
 
   function onInput(event: React.ChangeEvent<HTMLInputElement>) {
     const file = event.target.files?.[0]
@@ -21,24 +26,80 @@ export function SvgToPngPage() {
     reader.onload = async (event) => {
       const svg = event.target?.result as string
       setSvg(svg)
-
-      const _image = await svgToPng(svg, 256, 256)
-      setImage(_image)
     }
     reader.readAsText(file)
   }
 
-  return (
-    <PageRoot>
-      <Input
-        type="file"
-        accept="image/svg+xml"
-        onInput={onInput}
-      />
+  useEffect(() => {
+    if (!svg)
+      return
+    svgToPng(svg, width, height).then(setImage)
+  }, [svg, width, height])
 
-      {image && (
-        <img src={image} alt="SVG to PNG" className="w-64 h-64" />
+  return (
+    <PageRootWithSplit
+      left={(
+        <div className={cn('grid grid-cols-12 gap-4')}>
+          <Label className={cn('col-span-12')}>
+            SVG File
+            <Input
+              type="file"
+              accept="image/svg+xml"
+              onInput={onInput}
+              className={cn('mt-1')}
+            />
+          </Label>
+
+          <Label className={cn('col-span-6')}>
+            Width
+            <Input
+              type="number"
+              value={width}
+              onInput={event => setWidth(Number(event.currentTarget.value))}
+              className={cn('mt-1')}
+            />
+          </Label>
+
+          <Label className={cn('col-span-6')}>
+            Height
+            <Input
+              type="number"
+              value={height}
+              onInput={event => setHeight(Number(event.currentTarget.value))}
+              className={cn('mt-1')}
+            />
+          </Label>
+        </div>
       )}
-    </PageRoot>
+      right={(
+        <>
+          {image && (
+            <div className={cn('grid grid-cols-12 gap-4')}>
+              <div className={cn('col-span-12')}>
+                <Tooltip>
+                  <TooltipTrigger>
+                    <a href={image} download="image.png">
+                      <img
+                        src={image}
+                        alt="SVG to PNG"
+                        style={{
+                          width: `${width}px`,
+                          height: `${height}px`,
+                        }}
+                      />
+                    </a>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    Download
+                  </TooltipContent>
+                </Tooltip>
+              </div>
+            </div>
+          ) }
+        </>
+      )}
+    >
+
+    </PageRootWithSplit>
   )
 }

@@ -18,7 +18,7 @@ export function AppHeader() {
 
   return (
     <>
-      <header className={cn('relative flex justify-center items-center p-2 gap-2')}>
+      <header className={cn('electron-draggable relative flex justify-center items-center p-2 gap-2')}>
         {
           title && (
             <h1 className={cn('!text-sm text-left font-bold')}>{title}</h1>)
