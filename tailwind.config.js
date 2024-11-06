@@ -68,6 +68,7 @@ module.exports = {
         xs: 'calc(var(--radius) - 6px)',
       },
       fontFamily: {
+        pretendard: ['"Pretendard Variable"', ...fontFamily.mono],
         sans: ['var(--font-sans)', ...fontFamily.sans],
       },
       keyframes: {

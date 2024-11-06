@@ -1,4 +1,4 @@
-import { CodeEditor } from '@/components/atomic/atoms/code-editor'
+import CodeEditor from '@/components/atomic/atoms/code-editor'
 import { PageRootWithSplit } from '@/components/ui/layout'
 import { useCommentRemover } from '@/hooks/use-comment-remover'
 import usePageMeta from '@/hooks/use-page-meta'
@@ -31,14 +31,12 @@ export default function CommentRemoverPage() {
           onChange={value => setOriginalCode(value)}
         />
       )}
-      leftTitle="Original code"
       right={(
         <CodeEditor
           value={cleanedCode}
           readOnly
         />
       )}
-      rightTitle="Cleaned code"
     />
   )
 }

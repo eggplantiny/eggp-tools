@@ -22,8 +22,10 @@ export default function DefaultLayout() {
         <BlurFade
           className={cn('w-full h-full')}
           yOffset={0}
+          duration={0.225}
+          key={currentKey}
         >
-          <Outlet key={currentKey} />
+          <Outlet />
         </BlurFade>
       </main>
     </SidebarProvider>

@@ -3,7 +3,7 @@ name: Build/release
 on:
   push:
     tags:
-      - "v*"
+      - 'v*'
 
 permissions:
   contents: write
@@ -31,11 +31,6 @@ jobs:
           mkdir -p ~/private_keys/
           echo '${{ secrets.API_KEY }}' > ~/private_keys/AuthKey_${{ secrets.API_KEY_ID }}.p8
 
-      - name: echo pwd
-        run: |
-          echo $PWD
-          ls -la
-
       - name: Build/release Electron app
         uses: samuelmeuli/action-electron-builder@v1.6.0
         with:
@@ -49,4 +44,3 @@ jobs:
           APPLE_API_ISSUER: ${{ secrets.API_KEY_ISSUER_ID }}
           API_KEY_ID: ${{ secrets.API_KEY_ID }}
           API_KEY_ISSUER_ID: ${{ secrets.API_KEY_ISSUER_ID }}
-          DEBUG: electron-notarize*

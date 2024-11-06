@@ -27,7 +27,7 @@ const PageRoot = React.forwardRef<HTMLDivElement, PageRootProps>(
   ({ className, variant, ...props }, ref) => (
     <div
       ref={ref}
-      className={pageRootVariants({ variant, className })}
+      className={cn(pageRootVariants({ variant, className }), 'flex flex-col')}
       {...props}
     />
   ),
@@ -71,8 +71,6 @@ export interface PageRootWithSplitProps
   VariantProps<typeof pageRootVariants> {
   left: React.ReactNode
   right: React.ReactNode
-  leftTitle?: string
-  rightTitle?: string
   withHandle?: boolean
 }
 
@@ -90,13 +88,6 @@ const PageRootWithSplit = React.forwardRef<HTMLDivElement, PageRootWithSplitProp
           className={cn('p-4 flex flex-col')}
           minSize={33}
         >
-          {
-            props.leftTitle && (
-              <PageSubtitle>
-                {props.leftTitle}
-              </PageSubtitle>
-            )
-          }
           {props.left}
         </ResizablePanel>
         <ResizableHandle withHandle={props.withHandle} />
@@ -104,13 +95,6 @@ const PageRootWithSplit = React.forwardRef<HTMLDivElement, PageRootWithSplitProp
           className={cn('p-4 flex flex-col')}
           minSize={33}
         >
-          {
-            props.rightTitle && (
-              <PageSubtitle>
-                {props.rightTitle}
-              </PageSubtitle>
-            )
-          }
           {props.right}
         </ResizablePanel>
       </ResizablePanelGroup>

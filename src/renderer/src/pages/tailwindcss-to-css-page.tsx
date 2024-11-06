@@ -1,4 +1,4 @@
-import { CodeEditor } from '@/components/atomic/atoms/code-editor'
+import CodeEditor from '@/components/atomic/atoms/code-editor'
 import { PageRoot, PageSubtitle } from '@/components/ui/layout'
 import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from '@/components/ui/resizable'
 import usePageMeta from '@/hooks/use-page-meta'
@@ -23,7 +23,7 @@ export default function TailwindcssToCssPage() {
       <ResizablePanelGroup direction="horizontal">
         <ResizablePanel
           minSize={10}
-          className={cn('p-4')}
+          className={cn('p-4 flex flex-col')}
         >
           <PageSubtitle>
             HTML
@@ -36,7 +36,7 @@ export default function TailwindcssToCssPage() {
         </ResizablePanel>
         <ResizableHandle />
         <ResizablePanel
-          className={cn('p-4')}
+          className={cn('p-4 flex flex-col relative')}
           minSize={10}
         >
           <PageSubtitle>
@@ -50,7 +50,7 @@ export default function TailwindcssToCssPage() {
         </ResizablePanel>
         <ResizableHandle />
         <ResizablePanel
-          className={cn('p-4')}
+          className={cn('p-4 flex flex-col')}
           minSize={10}
         >
           <PageSubtitle>

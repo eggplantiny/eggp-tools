@@ -1,0 +1,41 @@
+.shiki {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+
+  @apply text-lg leading-6 font-pretendard overflow-auto w-full h-full;
+  tab-size: 4;
+}
+
+.shiki::-webkit-scrollbar {
+  display: none;
+}
+
+.shiki .tab,
+.shiki .space {
+  position: relative;
+}
+
+.shiki .tab::before {
+  content: '⇥';
+  position: absolute;
+  opacity: 0.3;
+}
+
+.shiki .space::before {
+  content: '·';
+  position: absolute;
+  opacity: 0.3;
+}
+
+.shiki .highlighted-word {
+  padding: 1px 3px;
+  margin: -1px -3px;
+  border-radius: 4px;
+}
+
+
+.tab-size-4 {
+  tab-size: 4;
+}
+
+

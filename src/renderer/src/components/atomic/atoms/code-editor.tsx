@@ -1,74 +1,125 @@
-import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardHeader } from '@/components/ui/card'
-import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
-import { cn } from '@/lib/utils'
-import { Editor } from '@monaco-editor/react'
-import { Copy } from 'lucide-react'
-import React, { useEffect, useState } from 'react'
-import { toast } from 'sonner'
+import { usePlayground } from '@/hooks/use-playground'
+import { cn, parseStyleString } from '@/lib/utils'
+import { useCallback, useEffect, useRef } from 'react'
 
-interface CodeEditorProps {
-  height?: string
+interface Props {
   readOnly?: boolean
   value?: string
   lang?: string
   onChange?: (value: string) => void
 }
 
-export function CodeEditor(props: CodeEditorProps) {
-  const [value, setValue] = useState('')
-  function handleChange(value: string | undefined, _event: any) {
-    props.onChange?.(value ?? '')
+export default function CodeEditor(props: Props) {
+  const play = usePlayground({
+    lang: props.lang ?? 'typescript',
+  })
+
+  const currentThemeType = play.allThemes.find(i => i.id === play.theme)?.type || 'inherit'
+
+  const textAreaRef = useRef<HTMLTextAreaElement>(null)
+  const highlightContainerRef = useRef<HTMLSpanElement>(null)
+
+  const syncScroll = useCallback(() => {
+    if (!highlightContainerRef.current || !textAreaRef.current)
+      return
+    const preEl = highlightContainerRef.current.children[0] as HTMLPreElement
+    if (!preEl)
+      return
+
+    const codeEl = preEl.children[0] as HTMLSpanElement
+
+    if (!codeEl)
+      return
+
+    const x = textAreaRef.current.scrollLeft
+    const y = textAreaRef.current.scrollTop
+
+    preEl.scrollLeft = x
+    preEl.scrollTop = y
+  }, [])
+
+  const onInput = () => {
+    setTimeout(() => {
+      syncScroll()
+    }, 0)
+  }
+
+  function onChange(e: React.ChangeEvent<HTMLTextAreaElement>) {
+    if (props.readOnly)
+      return
+    if (props.onChange)
+      props.onChange(e.target.value)
+
+    play.setInput(e.target.value)
+
+    e.stopPropagation()
   }
 
   useEffect(() => {
-    if (props.value) {
-      setValue(props.value)
-    }
+    play.setInput(props.value ?? '')
   }, [props.value])
 
-  async function copyContent(event: React.MouseEvent<HTMLButtonElement>) {
-    await navigator.clipboard.writeText(value)
-    toast('Copied to clipboard 📋')
+  useEffect(() => {
+    if (props.lang)
+      play.setLang(props.lang)
+  }, [play.lang])
 
-    event.stopPropagation()
-  }
+  useEffect(() => {
+    syncScroll()
+  }, [syncScroll, play.output])
 
   return (
-    <Card>
-      <CardHeader>
-        <div
-          className={cn('flex justify-end w-full')}
-        >
-          <Tooltip>
-            <TooltipTrigger>
-              <Button size="sm" onClick={copyContent}>
-                <Copy />
-              </Button>
-            </TooltipTrigger>
-            <TooltipContent>
-              Copy to clipboard
-            </TooltipContent>
-          </Tooltip>
+    <div
+      className={cn(
+        'transition-none',
+        'shadow',
+        'grow',
+        'rounded-lg',
+        'overflow-hidden',
+      )}
+      style={{
+        ...parseStyleString(play.preStyle),
+        colorScheme: currentThemeType,
+      }}
+    >
+      <div className="relative h-full min-h-[100px]">
+        <div className={cn('py-5', 'h-full', 'px-6')}>
+          <span
+            ref={highlightContainerRef}
+            dangerouslySetInnerHTML={{ __html: play.output }}
+          />
         </div>
-      </CardHeader>
-      <CardContent>
-        <Editor
-          height={props.height ?? '600px'}
-          language={props.lang}
-          theme="light"
-          value={value}
-          options={{
-            readOnly: props.readOnly,
-            fontSize: 14,
-            fontFamily: 'Pretendard Variable',
-            minimap: {
-              enabled: false,
-            },
-          }}
-          onChange={handleChange}
+        <textarea
+          ref={textAreaRef}
+          value={play.input}
+          onChange={onChange}
+          onInput={onInput}
+          onScroll={syncScroll}
+          className={cn(
+            'whitespace-pre',
+            'overflow-auto',
+            'w-full',
+            'h-full',
+            'bg-transparent',
+            'absolute',
+            'inset-0',
+            'py-5',
+            'px-6',
+            'text-transparent',
+            'caret-gray-500',
+            'tab-size-4',
+            'text-lg',
+            'leading-6',
+            'font-pretendard',
+            'resize-none',
+            'z-10',
+          )}
+          autoComplete="off"
+          autoCorrect="off"
+          autoCapitalize="off"
+          spellCheck="false"
         />
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   )
 }

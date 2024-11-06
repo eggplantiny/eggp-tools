@@ -1,4 +1,3 @@
-import BlurIn from '@/components/ui/blur-in'
 import { Separator } from '@/components/ui/separator'
 import { SidebarTrigger } from '@/components/ui/sidebar'
 import { cn } from '@/lib/utils'
@@ -23,11 +22,10 @@ export function AppHeader() {
       <header className={cn('relative flex items-center p-2 gap-2')}>
         <SidebarTrigger />
 
-        <BlurIn
-          duration={0.225}
-          word={title}
-          className={cn('!text-xl text-left font-bold')}
-        />
+        {
+          title && (
+            <h1 className={cn('!text-xl text-left font-bold')}>{title}</h1>)
+        }
       </header>
       <Separator />
     </>

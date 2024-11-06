@@ -37,7 +37,6 @@ export function usePlayground(props: Props) {
 
   const highlighterRef = useRef<any>(null)
 
-  // Initial setup: load highlighter and bundled data
   useEffect(() => {
     let mounted = true;
     (async () => {
@@ -73,7 +72,6 @@ export function usePlayground(props: Props) {
     }
   }, [props.lang])
 
-  // Update highlighter when language or theme changes
   useEffect(() => {
     if (!highlighterRef.current)
       return
@@ -98,7 +96,6 @@ export function usePlayground(props: Props) {
     updateHighlighter()
   }, [lang, theme])
 
-  // Run highlighter when input changes
   useEffect(() => {
     if (!highlighterRef.current || isLoading)
       return
@@ -111,7 +108,6 @@ export function usePlayground(props: Props) {
         transformers: [
           {
             preprocess(code: string) {
-              // Workaround for issue where the last span is empty
               if (code.endsWith('\n')) {
                 return `${code}\n`
               }
@@ -119,7 +115,9 @@ export function usePlayground(props: Props) {
             },
             pre(node: any) {
               if (node.properties) {
-                node.properties.className = [...(node.properties.className || []), 'vp-code']
+                node.properties.className = [
+                  ...(node.properties.className || []),
+                ]
                 setPreStyle(node.properties.style || '')
               }
             },

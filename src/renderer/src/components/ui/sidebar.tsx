@@ -1,3 +1,5 @@
+'use client'
+
 import type { VariantProps } from 'class-variance-authority'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -25,7 +27,7 @@ const SIDEBAR_WIDTH_MOBILE = '18rem'
 const SIDEBAR_WIDTH_ICON = '3rem'
 const SIDEBAR_KEYBOARD_SHORTCUT = 'b'
 
-interface SidebarContext {
+interface SidebarContextType {
   state: 'expanded' | 'collapsed'
   open: boolean
   setOpen: (open: boolean) => void
@@ -35,8 +37,7 @@ interface SidebarContext {
   toggleSidebar: () => void
 }
 
-// eslint-disable-next-line ts/no-redeclare
-const SidebarContext = React.createContext<SidebarContext | null>(null)
+const SidebarContext = React.createContext<SidebarContextType | null>(null)
 
 function useSidebar() {
   const context = React.useContext(SidebarContext)
@@ -117,7 +118,7 @@ const SidebarProvider = React.forwardRef<
         // This makes it easier to style the sidebar with Tailwind classes.
         const state = open ? 'expanded' : 'collapsed'
 
-        const contextValue = React.useMemo<SidebarContext>(
+        const contextValue = React.useMemo<SidebarContextType>(
           () => ({
             state,
             open,
