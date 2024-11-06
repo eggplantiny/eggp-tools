@@ -62,6 +62,9 @@ importers:
       css:
         specifier: ^3.0.0
         version: 3.0.0
+      electron-progressbar:
+        specifier: ^2.2.1
+        version: 2.2.1
       electron-updater:
         specifier: ^6.1.7
         version: 6.3.9
@@ -1937,6 +1940,9 @@ packages:
     engines: {node: '>=14.0.0'}
     hasBin: true
 
+  electron-progressbar@2.2.1:
+    resolution: {integrity: sha512-LQ9bxM3Tf5PG/1QngY8ywvht7IKvQ8tEIra8uh3RkLASqN/GYvr4r0uU9qz38r0Zn72UcouYzumKDfLwoI/rsw==}
+
   electron-publish@24.13.1:
     resolution: {integrity: sha512-2ZgdEqJ8e9D17Hwp5LEq5mLQPjqU3lv/IALvgp+4W8VeNhryfGhYEQC/PgDPMrnWUp+l60Ou5SJLsu+k4mhQ8A==}
 
@@ -2284,6 +2290,9 @@ packages:
   execa@8.0.1:
     resolution: {integrity: sha512-VyhnebXciFV2DESc+p6B+y0LjSm0krU4OgJN44qFAhBY0TJ+1V61tYD2+wHusZ6F9n5K+vl8k0sTy7PEfV4qpg==}
     engines: {node: '>=16.17'}
+
+  extend@3.0.2:
+    resolution: {integrity: sha512-fjquC59cD7CyW6urNXK0FBufkZcoiGG80wTuPujX590cB5Ttln20E2UB4S/WARVqhXffZl2LNgS+gQdPIIim/g==}
 
   extract-zip@2.0.1:
     resolution: {integrity: sha512-GDhU9ntwuKyGXdZBUgTIe+vXnWj0fppUEtMDL0+idd5Sta8TGpHssn/eusA9mrPr9qNDym6SxAYZjNvCn/9RBg==}
@@ -6001,6 +6010,10 @@ snapshots:
       - electron-builder-squirrel-windows
       - supports-color
 
+  electron-progressbar@2.2.1:
+    dependencies:
+      extend: 3.0.2
+
   electron-publish@24.13.1:
     dependencies:
       '@types/fs-extra': 9.0.13
@@ -6537,6 +6550,8 @@ snapshots:
       onetime: 6.0.0
       signal-exit: 4.1.0
       strip-final-newline: 3.0.0
+
+  extend@3.0.2: {}
 
   extract-zip@2.0.1:
     dependencies:

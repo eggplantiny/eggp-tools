@@ -1,5 +1,4 @@
 import type { BundledLanguageInfo, BundledThemeInfo } from '@shikijs/types'
-import { useLocalStorage } from '@/hooks/use-storage'
 import { useEffect, useRef, useState } from 'react'
 
 interface Props {
@@ -7,12 +6,12 @@ interface Props {
 }
 
 export function usePlayground(props: Props) {
-  const [theme, setTheme] = useLocalStorage<string>('shiki-playground:theme', 'vitesse-dark')
+  const [theme, setTheme] = useState<string>('synthwave-84')
 
   const [allThemes, setAllThemes] = useState<BundledThemeInfo[]>([
     {
-      id: 'vitesse-dark',
-      displayName: 'Vitesse Dark',
+      id: 'synthwave-84',
+      displayName: 'Synthwave 84',
       type: 'dark',
       import: undefined!,
     },

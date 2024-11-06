@@ -108,11 +108,12 @@ export default function CodeEditor(props: Props) {
             'text-transparent',
             'caret-gray-500',
             'tab-size-4',
-            'text-lg',
+            'text-sm',
             'leading-6',
             'font-pretendard',
             'resize-none',
             'z-10',
+            'focus:outline-none',
           )}
           autoComplete="off"
           autoCorrect="off"
