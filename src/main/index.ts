@@ -91,7 +91,7 @@ app
         createWindow()
     })
 
-    if (is.dev) {
+    if (!is.dev) {
       autoUpdater.checkForUpdates()
 
       let progressBar
