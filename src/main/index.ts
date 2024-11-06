@@ -12,8 +12,8 @@ import icon from '../../resources/icon.png?asset'
 
 function createWindow(): void {
   const mainWindow = new BrowserWindow({
-    width: 900,
-    height: 670,
+    titleBarStyle: 'hiddenInset',
+    frame: false,
     show: false,
     autoHideMenuBar: true,
     ...(process.platform === 'linux' ? { icon } : {}),
@@ -22,6 +22,8 @@ function createWindow(): void {
       sandbox: false,
     },
   })
+
+  mainWindow.maximize()
 
   mainWindow.on('ready-to-show', () => {
     mainWindow.show()
@@ -89,7 +91,6 @@ app
         createWindow()
     })
 
-    console.log(ProgressBar)
     if (is.dev) {
       autoUpdater.checkForUpdates()
 

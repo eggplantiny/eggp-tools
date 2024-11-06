@@ -5,7 +5,7 @@ import { cva } from 'class-variance-authority'
 import React from 'react'
 
 const pageRootVariants = cva(
-  'w-full h-full relative max-h-[calc(100vh-45px)] overflow-y-scroll px-4 py-4',
+  'w-full h-full relative max-h-[calc(100vh-45px)] px-4 py-4',
   {
     variants: {
       variant: {
@@ -78,7 +78,7 @@ const PageRootWithSplit = React.forwardRef<HTMLDivElement, PageRootWithSplitProp
   ({ className, variant, ...props }, ref) => (
     <PageRoot
       ref={ref}
-      className={cn(pageRootVariants({ variant, className }), '!p-0')}
+      className={cn(pageRootVariants({ variant, className }))}
       {...props}
     >
       <ResizablePanelGroup

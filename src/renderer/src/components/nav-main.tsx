@@ -19,7 +19,7 @@ export interface MenuItemType {
 
 export function NavMain({ items }: { items: MenuItemType[] }) {
   return (
-    <SidebarGroup>
+    <SidebarGroup className="mt-6">
       <SidebarGroupLabel>
         Tools
       </SidebarGroupLabel>

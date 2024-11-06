@@ -4,13 +4,15 @@ import CommentRemoverPage from '@/pages/comment-remover-page'
 import { HtmlToMarkdownPage } from '@/pages/html-to-markdown-page'
 import { SvgToPngPage } from '@/pages/svg-to-png-page'
 import TailwindcssToCssPage from '@/pages/tailwindcss-to-css-page'
-import { Route, Routes } from 'react-router-dom'
+
+import { Navigate, Route, Routes } from 'react-router-dom'
 
 function App() {
   return (
     <Routes>
       <Route path="/" element={<DefaultLayout />}>
-        <Route index path="color-tool" element={<ColorToolPage />} />
+        <Route path="/" element={<Navigate to="color-tool" />} />
+        <Route path="color-tool" element={<ColorToolPage />} />
         <Route path="html-to-markdown" element={<HtmlToMarkdownPage />} />
         <Route path="tailwindcss-to-css" element={<TailwindcssToCssPage />} />
         <Route path="comment-remover" element={<CommentRemoverPage />} />

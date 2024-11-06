@@ -1,14 +1,16 @@
+import { CommandController } from '@/components/atomic/molecules/CommandController'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
+
 import { Label } from '@/components/ui/label'
 import { PageRoot } from '@/components/ui/layout'
-
 import usePageMeta from '@/hooks/use-page-meta'
 import { useSessionStorage } from '@/hooks/use-storage'
-import { cn } from '@/lib/utils'
 
+import { cn } from '@/lib/utils'
+import { Popover, PopoverContent, PopoverTrigger } from '@renderer/components/ui/popover'
 import * as chroma from 'chroma.ts'
-import { Pipette } from 'lucide-react'
+import { PenTool, Pipette } from 'lucide-react'
 import { useCallback } from 'react'
 
 interface ColorItem {
@@ -28,7 +30,8 @@ interface ColorParser {
 
 interface ColorCommand {
   label: string
-  action: (color: chroma.Color) => string
+  rightAction: (color: chroma.Color) => string
+  leftAction: (color: chroma.Color) => string
 }
 
 export function ColorToolPage() {
@@ -86,24 +89,19 @@ export function ColorToolPage() {
 
   const colorCommands: ColorCommand[] = [
     {
-      label: 'Darken',
-      action: color => color.darker().hex('rgb'),
+      label: 'Brighten',
+      leftAction: color => color.darker().hex('rgb'),
+      rightAction: color => color.brighter().hex('rgb'),
     },
     {
-      label: 'Lighten',
-      action: color => color.brighter().hex('rgb'),
-    },
-    {
-      label: 'Saturate',
-      action: color => color.saturate().hex('rgb'),
-    },
-    {
-      label: 'Desaturate',
-      action: color => color.desaturate().hex('rgb'),
+      label: 'Saturation',
+      leftAction: color => color.desaturate().hex('rgb'),
+      rightAction: color => color.saturate().hex('rgb'),
     },
     {
       label: 'Alpha',
-      action: color => color.alpha(0.5).hex('rgba'),
+      leftAction: color => color.alpha(color.alpha() - 0.1).hex('rgba'),
+      rightAction: color => color.alpha(color.alpha() + 0.1).hex('rgba'),
     },
   ]
 
@@ -239,19 +237,27 @@ export function ColorToolPage() {
     <PageRoot>
       <div className={cn('flex flex-col gap-2')}>
         <div className="w-full flex flex-wrap justify-end gap-2">
-          { colorCommands.map(({ label, action }) => (
-            <Button
-              onClick={() => syncColors(action(chroma.color(pickerColor)))}
-              key={label}
-            >
-              { label }
-            </Button>
-          )) }
+          <Popover>
+            <PopoverTrigger asChild>
+              <Button variant="outline" size="icon">
+                <PenTool />
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent>
+              <div className={cn('flex flex-col gap-4')}>
+                { colorCommands.map(({ label, leftAction, rightAction }) => (
+                  <CommandController
+                    label={label}
+                    leftAction={() => syncColors(leftAction(chroma.color(pickerColor)))}
+                    rightAction={() => syncColors(rightAction(chroma.color(pickerColor)))}
+                  />
+                )) }
+              </div>
+            </PopoverContent>
+          </Popover>
 
-          <Button onClick={handleClick}>
+          <Button variant="outline" size="icon" onClick={handleClick}>
             <Pipette />
-            { ' ' }
-            Pick a color
           </Button>
         </div>
 

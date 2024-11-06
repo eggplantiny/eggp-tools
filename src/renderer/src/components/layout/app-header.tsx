@@ -1,5 +1,4 @@
 import { Separator } from '@/components/ui/separator'
-import { SidebarTrigger } from '@/components/ui/sidebar'
 import { cn } from '@/lib/utils'
 import { useEffect, useState } from 'react'
 
@@ -19,12 +18,10 @@ export function AppHeader() {
 
   return (
     <>
-      <header className={cn('relative flex items-center p-2 gap-2')}>
-        <SidebarTrigger />
-
+      <header className={cn('relative flex justify-center items-center p-2 gap-2')}>
         {
           title && (
-            <h1 className={cn('!text-xl text-left font-bold')}>{title}</h1>)
+            <h1 className={cn('!text-sm text-left font-bold')}>{title}</h1>)
         }
       </header>
       <Separator />

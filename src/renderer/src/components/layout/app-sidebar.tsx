@@ -4,12 +4,15 @@ import { NavMain } from '@/components/nav-main'
 import {
   Sidebar,
   SidebarContent,
+  SidebarFooter,
   SidebarRail,
+  SidebarTrigger,
 } from '@/components/ui/sidebar'
 import {
   BriefcaseConveyorBeltIcon,
   Code,
   Eraser,
+  ImageIcon,
   PaletteIcon,
 } from 'lucide-react'
 import * as React from 'react'
@@ -39,11 +42,11 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       url: '/comment-remover',
       icon: Eraser,
     },
-    // {
-    //   title: 'SVG to PNG',
-    //   url: '/svg-to-png',
-    //   icon: ImageIcon,
-    // },
+    {
+      title: 'SVG to PNG',
+      url: '/svg-to-png',
+      icon: ImageIcon,
+    },
   ])
 
   function isActive(url: string) {
@@ -62,13 +65,19 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   }, [location])
 
   return (
-    <Sidebar collapsible="icon" {...props}>
+    <Sidebar
+      collapsible="icon"
+      {...props}
+    >
       <SidebarContent>
         <NavMain
           items={menuItems}
         />
       </SidebarContent>
       <SidebarRail />
+      <SidebarFooter>
+        <SidebarTrigger />
+      </SidebarFooter>
     </Sidebar>
   )
 }

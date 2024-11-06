@@ -38,8 +38,8 @@
     --destructive: 360 100% 70%;
     --destructive-foreground: 250 10% 10%;
     --border: 250 20% 30%;
-    --input: 250 20% 15%;
-    --ring: 273.0120481927711 99.20318725099602% 49.2156862745098%;
+    --input: 220 35% 25%;
+    --ring: 0 80% 70%;
     --chart-1: 300 100% 80%;
     --chart-2: 240 100% 90%;
     --chart-3: 200 100% 70%;
@@ -54,7 +54,7 @@
     --sidebar-accent: 0 100% 70%;
     --sidebar-accent-foreground: 250 10% 10%;
     --sidebar-border: 250 20% 30%;
-    --sidebar-ring: 300 100% 50%;
+    --sidebar-ring: 0 80% 70%;
   }
 
   .dark {

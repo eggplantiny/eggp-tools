@@ -17,7 +17,6 @@ export default function DefaultLayout() {
 
       <main className={cn('relative w-full overflow-y-hidden')}>
         <Toaster />
-
         <AppHeader />
         <BlurFade
           className={cn('w-full h-full')}
