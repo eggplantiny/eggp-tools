@@ -1,6 +1,6 @@
 import { join } from 'node:path'
 import { electronApp, is, optimizer } from '@electron-toolkit/utils'
-import { app, BrowserWindow, dialog, ipcMain, shell } from 'electron'
+import { app, BrowserWindow, dialog, ipcMain, Menu, shell } from 'electron'
 import ProgressBar from 'electron-progressbar'
 import { autoUpdater } from 'electron-updater'
 import postcss from 'postcss'
@@ -33,6 +33,34 @@ function createWindow(): void {
     shell.openExternal(details.url)
     return { action: 'deny' }
   })
+
+  const menu = Menu.buildFromTemplate([
+    {
+      label: 'File',
+      submenu: [
+        {
+          label: 'About eggp-tools',
+          click: () => {
+            const version = app.getVersion()
+            dialog.showMessageBox({
+              type: 'info',
+              title: 'About eggp-tools',
+              message: `eggp-tools version ${version}\nBuilt with Electron and React`,
+              buttons: ['OK'],
+            })
+          },
+        },
+        {
+          label: 'Check for Update',
+          click: () => {
+            autoUpdater.checkForUpdates()
+          },
+        },
+        { role: 'quit' },
+      ],
+    },
+  ])
+  Menu.setApplicationMenu(menu)
 
   if (is.dev && process.env.ELECTRON_RENDERER_URL) {
     mainWindow.loadURL(process.env.ELECTRON_RENDERER_URL)
