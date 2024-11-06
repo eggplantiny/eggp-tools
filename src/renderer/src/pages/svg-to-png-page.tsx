@@ -10,7 +10,7 @@ export function SvgToPngPage() {
     title: 'SVG to PNG',
   })
 
-  const [svg, setSvg] = useSessionStorage<string>('svg-to-png:svg', '')
+  const [_svg, setSvg] = useSessionStorage<string>('svg-to-png:svg', '')
   const [image, setImage] = useState<string>()
 
   function onInput(event: React.ChangeEvent<HTMLInputElement>) {
