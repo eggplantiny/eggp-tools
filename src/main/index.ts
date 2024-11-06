@@ -1,8 +1,7 @@
 import { join } from 'node:path'
 import { electronApp, is, optimizer } from '@electron-toolkit/utils'
 import { app, BrowserWindow, dialog, ipcMain, shell } from 'electron'
-// @ts-ignore
-import * as ProgressBar from 'electron-progressbar'
+import ProgressBar from 'electron-progressbar'
 import { autoUpdater } from 'electron-updater'
 import postcss from 'postcss'
 
@@ -90,33 +89,29 @@ app
         createWindow()
     })
 
-    if (!is.dev) {
+    console.log(ProgressBar)
+    if (is.dev) {
       autoUpdater.checkForUpdates()
 
       let progressBar
 
-      /* 업데이트가 가능한지 확인하는 부분이다.
-      업데이트가 가능한 경우 팝업이 뜨면서 업데이트를 하겠냐고 묻는다.
-      Update를 클릭하면 업데이트 가능한 파일을 다운로드 받는다. */
       autoUpdater.on('update-available', () => {
         dialog
           .showMessageBox({
             type: 'info',
             title: 'Update available',
             message:
-              'A new version of Project is available. Do you want to update now?',
-            buttons: ['Update', 'Later'],
+              'A new version of eggp-tools is available. Do you want to update now?',
+            buttons: ['Later', 'Update'],
           })
           .then((result) => {
             const buttonIndex = result.response
 
-            if (buttonIndex === 0)
+            if (buttonIndex === 1)
               autoUpdater.downloadUpdate()
           })
       })
 
-      /* progress bar가 없으면 업데이트를 다운받는 동안 사용자가 그 내용을 알 수 없기 때문에
-      progress bar는 꼭 만들어준다. */
       autoUpdater.once('download-progress', (_progressObj) => {
         progressBar = new ProgressBar({
           text: 'Downloading...',
@@ -133,7 +128,6 @@ app
           })
       })
 
-      // 업데이트를 다운받고 나면 업데이트 설치 후 재시작을 요청하는 팝업이 뜬다.
       autoUpdater.on('update-downloaded', () => {
         progressBar.setCompleted()
         dialog
