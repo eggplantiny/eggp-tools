@@ -1,9 +1,9 @@
+import { Downloadable } from '@/components/atomic/atoms/downloadable'
 import { Card, CardContent } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { PageRootWithSplit } from '@/components/ui/layout'
 import { Separator } from '@/components/ui/separator'
-import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
 import usePageMeta from '@/hooks/use-page-meta'
 import { svgToPng } from '@/lib/image'
 import { cn } from '@/lib/utils'
@@ -86,23 +86,16 @@ export function SvgToPngPage() {
           { image && (
             <div className={cn('grid grid-cols-12 gap-4')}>
               <div className={cn('col-span-12')}>
-                <Tooltip>
-                  <TooltipTrigger>
-                    <a href={image} download="image.png">
-                      <img
-                        src={image}
-                        alt="SVG to PNG"
-                        style={{
-                          width: `${width}px`,
-                          height: `${height}px`,
-                        }}
-                      />
-                    </a>
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    Download
-                  </TooltipContent>
-                </Tooltip>
+                <Downloadable href={image} fileName="image.png">
+                  <img
+                    src={image}
+                    alt="SVG to PNG"
+                    style={{
+                      width: `${width}px`,
+                      height: `${height}px`,
+                    }}
+                  />
+                </Downloadable>
               </div>
             </div>
           ) }

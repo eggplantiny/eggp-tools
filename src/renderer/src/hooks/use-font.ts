@@ -74,5 +74,6 @@ export function useFont() {
     isFetched,
     error,
     clear,
+    font,
   }
 }

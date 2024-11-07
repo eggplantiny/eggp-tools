@@ -14,6 +14,7 @@ import {
   Eraser,
   ImageIcon,
   PaletteIcon,
+  TextIcon,
 } from 'lucide-react'
 import * as React from 'react'
 import { useEffect, useState } from 'react'
@@ -47,11 +48,11 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       url: '/svg-to-png',
       icon: ImageIcon,
     },
-    // {
-    //   title: 'Font to SVG',
-    //   url: '/font-to-svg',
-    //   icon: TextIcon,
-    // },
+    {
+      title: 'Font to SVG',
+      url: '/font-to-svg',
+      icon: TextIcon,
+    },
   ])
 
   function isActive(url: string) {
