@@ -1,6 +1,8 @@
+import { Card, CardContent } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { PageRootWithSplit } from '@/components/ui/layout'
+import { Separator } from '@/components/ui/separator'
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
 import usePageMeta from '@/hooks/use-page-meta'
 import { svgToPng } from '@/lib/image'
@@ -39,41 +41,49 @@ export function SvgToPngPage() {
   return (
     <PageRootWithSplit
       left={(
-        <div className={cn('grid grid-cols-12 gap-4')}>
-          <Label className={cn('col-span-12')}>
-            SVG File
-            <Input
-              type="file"
-              accept="image/svg+xml"
-              onInput={onInput}
-              className={cn('mt-1')}
-            />
-          </Label>
+        <Card className="pt-4">
+          <CardContent>
+            <Label>
+              SVG File
+              <Input
+                type="file"
+                accept="image/svg+xml"
+                onInput={onInput}
+                className={cn('mt-1')}
+              />
+            </Label>
 
-          <Label className={cn('col-span-6')}>
-            Width
-            <Input
-              type="number"
-              value={width}
-              onInput={event => setWidth(Number(event.currentTarget.value))}
-              className={cn('mt-1')}
-            />
-          </Label>
+            <Separator className="my-4" />
 
-          <Label className={cn('col-span-6')}>
-            Height
-            <Input
-              type="number"
-              value={height}
-              onInput={event => setHeight(Number(event.currentTarget.value))}
-              className={cn('mt-1')}
-            />
-          </Label>
-        </div>
+            <div className={cn('flex gap-4')}>
+              <Label className="grow">
+                Width
+                <Input
+                  type="number"
+                  value={width}
+                  onInput={event => setWidth(Number(event.currentTarget.value))}
+                  className={cn('mt-1')}
+                />
+              </Label>
+
+              <Separator orientation="vertical" />
+
+              <Label className="grow">
+                Height
+                <Input
+                  type="number"
+                  value={height}
+                  onInput={event => setHeight(Number(event.currentTarget.value))}
+                  className={cn('mt-1')}
+                />
+              </Label>
+            </div>
+          </CardContent>
+        </Card>
       )}
       right={(
         <>
-          {image && (
+          { image && (
             <div className={cn('grid grid-cols-12 gap-4')}>
               <div className={cn('col-span-12')}>
                 <Tooltip>

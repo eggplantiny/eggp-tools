@@ -9,16 +9,6 @@
   @apply font-pretendard;
 }
 
-
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
 @layer base {
   :root {
     --background: 250 10% 10%;
@@ -32,7 +22,7 @@
     --secondary: 250 100% 70%;
     --secondary-foreground: 250 10% 10%;
     --muted: 250 10% 20%;
-    --muted-foreground: 250 10% 90%;
+    --muted-foreground: 250 10% 25%;
     --accent: 0 100% 70%;
     --accent-foreground: 250 10% 10%;
     --destructive: 360 100% 70%;
@@ -69,7 +59,7 @@
     --secondary: 250 100% 70%;
     --secondary-foreground: 250 10% 10%;
     --muted: 250 10% 20%;
-    --muted-foreground: 250 10% 90%;
+    --muted-foreground: 250 10% 25%;
     --accent: 0 100% 70%;
     --accent-foreground: 250 10% 10%;
     --destructive: 360 100% 70%;

@@ -7,7 +7,7 @@ import { cn } from '@/lib/utils'
 import { useMemo } from 'react'
 import { Outlet, useLocation } from 'react-router-dom'
 
-export default function DefaultLayout() {
+export function DefaultLayout() {
   const location = useLocation()
 
   const currentKey = useMemo(() => location.pathname, [location])

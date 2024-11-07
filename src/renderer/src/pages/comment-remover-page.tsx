@@ -1,11 +1,11 @@
 import CodeEditor from '@/components/atomic/atoms/code-editor'
-import { PageRootWithSplit, PageSubtitle } from '@/components/ui/layout'
+import { PageRootWithSplit } from '@/components/ui/layout'
 import { useCommentRemover } from '@/hooks/use-comment-remover'
 import usePageMeta from '@/hooks/use-page-meta'
 import { useSessionStorage } from '@/hooks/use-storage'
 import { useEffect, useState } from 'react'
 
-export default function CommentRemoverPage() {
+export function CommentRemoverPage() {
   usePageMeta({
     title: 'Comment Remover',
   })
@@ -29,10 +29,9 @@ export default function CommentRemoverPage() {
     <PageRootWithSplit
       left={(
         <>
-          <PageSubtitle>
-            Code with comments
-          </PageSubtitle>
           <CodeEditor
+            title="Code with comments"
+            clearable
             value={originalCode}
             onChange={value => setOriginalCode(value)}
           />
@@ -40,10 +39,8 @@ export default function CommentRemoverPage() {
       )}
       right={(
         <>
-          <PageSubtitle>
-            Code without comments
-          </PageSubtitle>
           <CodeEditor
+            title="Code without comments"
             value={cleanedCode}
             readOnly
           />

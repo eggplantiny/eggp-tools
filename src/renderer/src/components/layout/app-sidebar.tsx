@@ -47,6 +47,11 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       url: '/svg-to-png',
       icon: ImageIcon,
     },
+    // {
+    //   title: 'Font to SVG',
+    //   url: '/font-to-svg',
+    //   icon: TextIcon,
+    // },
   ])
 
   function isActive(url: string) {

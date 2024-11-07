@@ -1,12 +1,13 @@
 import { CommandController } from '@/components/atomic/molecules/CommandController'
 import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
+import { Card } from '@/components/ui/card'
 
+import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { PageRoot } from '@/components/ui/layout'
 import usePageMeta from '@/hooks/use-page-meta'
-import { useSessionStorage } from '@/hooks/use-storage'
 
+import { useSessionStorage } from '@/hooks/use-storage'
 import { cn } from '@/lib/utils'
 import { Popover, PopoverContent, PopoverTrigger } from '@renderer/components/ui/popover'
 import * as chroma from 'chroma.ts'
@@ -235,62 +236,64 @@ export function ColorToolPage() {
 
   return (
     <PageRoot>
-      <div className={cn('flex flex-col gap-2')}>
-        <div className="w-full flex flex-wrap justify-end gap-2">
-          <Popover>
-            <PopoverTrigger asChild>
-              <Button variant="outline" size="icon">
-                <PenTool />
-              </Button>
-            </PopoverTrigger>
-            <PopoverContent className={cn('w-64')}>
-              <div className={cn('flex flex-col gap-4')}>
-                { colorCommands.map(({ label, leftAction, rightAction }) => (
-                  <CommandController
-                    key={label}
-                    label={label}
-                    leftAction={() => syncColors(leftAction(chroma.color(pickerColor)))}
-                    rightAction={() => syncColors(rightAction(chroma.color(pickerColor)))}
-                  />
-                )) }
-              </div>
-            </PopoverContent>
-          </Popover>
+      <Card className={cn('p-8')}>
+        <div className={cn('flex flex-col gap-2')}>
+          <div className="w-full flex flex-wrap justify-end gap-2">
+            <Popover>
+              <PopoverTrigger asChild>
+                <Button variant="outline" size="icon">
+                  <PenTool />
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className={cn('w-64')}>
+                <div className={cn('flex flex-col gap-4')}>
+                  { colorCommands.map(({ label, leftAction, rightAction }) => (
+                    <CommandController
+                      key={label}
+                      label={label}
+                      leftAction={() => syncColors(leftAction(chroma.color(pickerColor)))}
+                      rightAction={() => syncColors(rightAction(chroma.color(pickerColor)))}
+                    />
+                  )) }
+                </div>
+              </PopoverContent>
+            </Popover>
 
-          <Button variant="outline" size="icon" onClick={handleClick}>
-            <Pipette />
-          </Button>
-        </div>
-
-        <div className={cn('grid grid-cols-12 gap-2')}>
-          <div className={cn('col-span-12 md:col-span-6')}>
-            <Label>
-              Color
-              <Input
-                type="color"
-                value={pickerColor}
-                onChange={(e) => {
-                  setPickerColor(e.target.value)
-                  syncColors(e.target.value)
-                }}
-              />
-            </Label>
+            <Button variant="outline" size="icon" onClick={handleClick}>
+              <Pipette />
+            </Button>
           </div>
-          {colors.map(({ name, color, readOnly }) => (
-            <div className={cn('col-span-12 md:col-span-6')} key={name}>
+
+          <div className={cn('grid grid-cols-12 gap-4')}>
+            <div className={cn('col-span-12 md:col-span-6')}>
               <Label>
-                {name}
+                Color
                 <Input
-                  value={color}
-                  readOnly={readOnly}
-                  onChange={e => syncColors(e.target.value)}
+                  type="color"
+                  value={pickerColor}
+                  onChange={(e) => {
+                    setPickerColor(e.target.value)
+                    syncColors(e.target.value)
+                  }}
                 />
               </Label>
             </div>
-          ))}
-        </div>
+            { colors.map(({ name, color, readOnly }) => (
+              <div className={cn('col-span-12 md:col-span-6')} key={name}>
+                <Label>
+                  { name }
+                  <Input
+                    value={color}
+                    readOnly={readOnly}
+                    onChange={e => syncColors(e.target.value)}
+                  />
+                </Label>
+              </div>
+            )) }
+          </div>
 
-      </div>
+        </div>
+      </Card>
     </PageRoot>
   )
 }
