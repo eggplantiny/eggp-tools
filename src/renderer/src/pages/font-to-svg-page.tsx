@@ -1,29 +1,22 @@
+import type { FileUrlFormSubmitParams } from '@/components/atomic/molecules/file-url-form'
 import { Downloadable } from '@/components/atomic/atoms/downloadable'
-import { LoadableButton } from '@/components/atomic/atoms/loadable-button'
-import { HeightTransition } from '@/components/transitions/height-transition'
-import { Button } from '@/components/ui/button'
+import { FileUrlForm } from '@/components/atomic/molecules/file-url-form'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { PageRootWithSplit } from '@/components/ui/layout'
-import { Separator } from '@/components/ui/separator'
-import { useFont } from '@/hooks/use-font'
 
+import { useFont } from '@/hooks/use-font'
 import { useMakerJs } from '@/hooks/use-makerjs'
 import usePageMeta from '@/hooks/use-page-meta'
 import { cn } from '@/lib/utils'
-import { zodResolver } from '@hookform/resolvers/zod'
 import { useEffect, useState } from 'react'
-import { useForm } from 'react-hook-form'
-import { z } from 'zod'
 
 export function FontToSvgPage() {
   usePageMeta({
     title: 'Font to SVG',
   })
 
-  const [openFontForm, setOpenFontForm] = useState<boolean>(true)
   const [text, setText] = useState<string>('hello world')
   const [fillColor, setFillColor] = useState<string>('#000000')
   const [strokeColor, setStrokeColor] = useState<string>('#000000')
@@ -37,7 +30,6 @@ export function FontToSvgPage() {
     setFontFile,
     loading,
     error,
-    clear,
     font,
   } = useFont()
 
@@ -68,33 +60,13 @@ export function FontToSvgPage() {
     }
   }, [svgOutput])
 
-  const formSchema = z.object({
-    url: z.string().url().optional(),
-    file: z.any().optional(),
-  })
-
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      url: undefined,
-      file: undefined,
-    },
-  })
-
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    if (!values.url && !values.file) {
-      return
+  async function onSubmit(params: FileUrlFormSubmitParams) {
+    if (params.url) {
+      setFontUrl(params.url)
     }
-
-    if (values.url) {
-      setFontUrl(values.url)
+    else if (params.file) {
+      setFontFile(params.file)
     }
-
-    if (values.file) {
-      setFontFile(values.file)
-    }
-
-    setOpenFontForm(false)
   }
 
   return (
@@ -104,84 +76,12 @@ export function FontToSvgPage() {
           <Card
             className={cn('p-4')}
           >
-            <HeightTransition isOpen={openFontForm}>
-              <Form {...form}>
-                <form
-                  onSubmit={form.handleSubmit(onSubmit)}
-                >
-
-                  <FormField
-                    control={form.control}
-                    name="url"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>URL</FormLabel>
-                        <FormControl>
-                          <Input
-                            type="url"
-                            {...field}
-                            placeholder="https://example.com/font.ttf"
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <Separator className={cn('my-4')}>
-                    or
-                  </Separator>
-
-                  <FormField
-                    control={form.control}
-                    name="file"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>File</FormLabel>
-                        <FormControl>
-                          <Input
-                            type="file"
-                            accept=".otf,.ttf,.woff"
-                            onChange={e =>
-                              field.onChange({ target: { value: e.target.files?.[0] ?? undefined, name: field.name } })}
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-
-                  <div className={cn('mt-4 w-full flex flex-col gap-4')}>
-                    <LoadableButton
-                      block
-                      loading={loading}
-                      type="submit"
-                    >
-                      Load Font
-                    </LoadableButton>
-
-                    <Button
-                      block
-                      type="button"
-                      variant="outline"
-                      onClick={() => {
-                        clear()
-                        form.reset()
-                      }}
-                    >
-                      Clear
-                    </Button>
-                  </div>
-                </form>
-              </Form>
-            </HeightTransition>
-            <HeightTransition isOpen={!openFontForm}>
-              <Button
-                block
-                onClick={() => setOpenFontForm(true)}
-              >
-                Load Font
-              </Button>
-            </HeightTransition>
+            <FileUrlForm
+              onSubmit={onSubmit}
+              loading={loading}
+              urlPlaceholder="https://example.com/font.ttf"
+              fileAccept=".ttf,.otf,.woff"
+            />
           </Card>
 
           {

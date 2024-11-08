@@ -10,6 +10,7 @@ import {
 } from '@/components/ui/sidebar'
 import {
   BriefcaseConveyorBeltIcon,
+  Brush,
   Code,
   Eraser,
   ImageIcon,
@@ -26,7 +27,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     {
       title: 'Color tool',
       url: '/color-tool',
-      icon: PaletteIcon,
+      icon: Brush,
     },
     {
       title: 'HTML to Markdown',
@@ -52,6 +53,11 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       title: 'Font to SVG',
       url: '/font-to-svg',
       icon: TextIcon,
+    },
+    {
+      title: 'Dominant colors',
+      url: '/dominant-colors',
+      icon: PaletteIcon,
     },
   ])
 
