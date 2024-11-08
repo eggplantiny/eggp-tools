@@ -1,15 +1,19 @@
 import { Button } from '@/components/ui/button'
 import { Label } from '@/components/ui/label'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
-import React, { useState } from 'react'
+import { delay } from '@/lib/utils'
+import { useState } from 'react'
 import { toast } from 'sonner'
 
-// ColorSwatch 컴포넌트
 interface ColorSwatchProps {
   color: string
 }
 
-const ColorSwatch: React.FC<ColorSwatchProps> = ({ color }) => {
+interface ColorPaletteProps {
+  colors: string[]
+}
+
+function ColorSwatch({ color }: ColorSwatchProps) {
   const [copied, setCopied] = useState(false)
 
   const copyToClipboard = async (text: string) => {
@@ -17,7 +21,8 @@ const ColorSwatch: React.FC<ColorSwatchProps> = ({ color }) => {
       await navigator.clipboard.writeText(text)
       setCopied(true)
       toast.success(`Copied ${color} 🚀`)
-      setTimeout(() => setCopied(false), 1500) // 1.5초 후에 '복사됨' 표시 숨김
+      await delay(1500)
+      setCopied(false)
     }
     catch (error) {
       console.error('Failed to copy:', error)
@@ -49,12 +54,7 @@ const ColorSwatch: React.FC<ColorSwatchProps> = ({ color }) => {
   )
 }
 
-// ColorPalette 컴포넌트
-interface ColorPaletteProps {
-  colors: string[]
-}
-
-export const ColorPalette: React.FC<ColorPaletteProps> = ({ colors }) => {
+export function ColorPalette({ colors }: ColorPaletteProps) {
   return (
     <div className="flex flex-col gap-4 p-4">
       {colors.map((color, index) => (
