@@ -33,7 +33,7 @@ export function FileUrlForm(props: Props) {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      url: '',
+      url: undefined,
       file: undefined,
     },
   })
@@ -57,6 +57,7 @@ export function FileUrlForm(props: Props) {
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
+            className={cn('p-1')}
           >
             <FormField
               control={form.control}
@@ -68,7 +69,7 @@ export function FileUrlForm(props: Props) {
                     <Input
                       type="url"
                       {...field}
-                      placeholder="https://example.com/font.ttf"
+                      placeholder={props.urlPlaceholder ?? ''}
                     />
                   </FormControl>
                   <FormMessage />
@@ -88,7 +89,7 @@ export function FileUrlForm(props: Props) {
                   <FormControl>
                     <Input
                       type="file"
-                      accept=".otf,.ttf,.woff"
+                      accept={props.fileAccept ?? ''}
                       onChange={e =>
                         field.onChange({ target: { value: e.target.files?.[0] ?? undefined, name: field.name } })}
                     />
