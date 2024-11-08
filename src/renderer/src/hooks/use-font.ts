@@ -37,8 +37,14 @@ export function useFont() {
     if (!fontData) {
       return null
     }
-    const font = parse(fontData)
-    return font
+    try {
+      const font = parse(fontData)
+      return font
+    }
+    catch (e) {
+      setError((e as Error).message)
+      return null
+    }
   }, [fontData])
 
   const isFetched = useMemo(() => !!font, [font])

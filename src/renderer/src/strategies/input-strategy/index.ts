@@ -1,3 +1,5 @@
+import { fetchWithBackend } from '@/ipc'
+
 interface InputStrategy<InputType> {
   fetchData: (input: InputType) => Promise<ArrayBuffer>
 }
@@ -10,12 +12,11 @@ class FileInputStrategy implements InputStrategy<File> {
 
 class UrlInputStrategy implements InputStrategy<string> {
   async fetchData(url: string): Promise<ArrayBuffer> {
-    const response = await fetch(url)
-    if (response.ok) {
-      return await response.arrayBuffer()
+    try {
+      return await fetchWithBackend(url)
     }
-    else {
-      throw new Error(`Failed to fetch data from URL: ${url}`)
+    catch (error) {
+      throw new Error(`Error fetching URL $${(error as Error).message}`)
     }
   }
 }

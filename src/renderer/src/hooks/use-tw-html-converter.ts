@@ -1,3 +1,4 @@
+import { tailwindToCss } from '@/ipc'
 import { CssTransformer } from '@/lib/css.transformer'
 import { HtmlClassNameTransformer } from '@/lib/html-class-name.transformer'
 import { cn } from '@/lib/utils'
@@ -5,7 +6,7 @@ import { useEffect, useState } from 'react'
 
 async function refine(className: string, code: string) {
   const twClassName = cn(code)
-  const css = await window.electron.ipcRenderer.invoke('tailwind-to-css', twClassName)
+  const css = await tailwindToCss(twClassName)
   const cssTransformer = new CssTransformer()
 
   return {

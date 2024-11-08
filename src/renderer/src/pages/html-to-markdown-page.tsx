@@ -1,6 +1,7 @@
 import CodeEditor from '@/components/atomic/atoms/code-editor'
 import { PageRootWithSplit } from '@/components/ui/layout'
 import usePageMeta from '@/hooks/use-page-meta'
+import { htmlToMarkdown } from '@/ipc'
 import { useEffect, useState } from 'react'
 
 export function HtmlToMarkdownPage() {
@@ -12,10 +13,9 @@ export function HtmlToMarkdownPage() {
   const [markdown, setMarkdown] = useState<string>('')
 
   useEffect(() => {
-    window.electron.ipcRenderer.invoke('html-to-markdown', html)
-      .then((md: string) => {
-        setMarkdown(md)
-      })
+    htmlToMarkdown(html)
+      .then(result => setMarkdown(result))
+      .catch(error => console.error(error))
   }, [html])
 
   return (

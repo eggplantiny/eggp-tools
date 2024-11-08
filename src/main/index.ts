@@ -48,7 +48,7 @@ function createWindow(): void {
 app
   .whenReady()
   .then(() => {
-    electronApp.setAppUserModelId('com.electron')
+    electronApp.setAppUserModelId('com.eggp.eggp-tools')
 
     app.on('browser-window-created', (_, window) => {
       optimizer.watchWindowShortcuts(window)
@@ -84,6 +84,18 @@ app
       catch (error) {
         console.error('Tailwind CSS 처리 중 오류 발생:', error)
         throw error
+      }
+    })
+
+    ipcMain.handle('fetch-url', async (_event, url) => {
+      try {
+        const response = await fetch(url)
+        const arrayBuffer = await response.arrayBuffer()
+        return arrayBuffer
+      }
+      catch (error) {
+        console.error('Fetch error:', error)
+        return { error: (error as Error).message }
       }
     })
 
