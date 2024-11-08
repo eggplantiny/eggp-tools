@@ -35,7 +35,18 @@ export function SvgToPngPage() {
   useEffect(() => {
     if (!svg)
       return
+
+    if (image) {
+      URL.revokeObjectURL(image)
+    }
+
     svgToPng(svg, width, height).then(setImage)
+
+    return () => {
+      if (image) {
+        URL.revokeObjectURL(image)
+      }
+    }
   }, [svg, width, height])
 
   return (
